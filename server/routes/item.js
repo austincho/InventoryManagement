@@ -1,23 +1,19 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Item = require('../models/Item');
 
-router.get('/', async(req, res) => {
+router.get('/', async(_req, res) => {
     try{
-        return Item.find().limit(50).then(query => res.status(200).json({items: query}));
+        return Item.find().then(query => res.status(200).json(query));
     } catch (err) {
         return res.status(500).json(err);
     }
 })
 
-router.get('/add', async(req, res) => {
+router.post('/add', async(req, res) => {
     try {
-        const newItem = new Item({
-            "name": "Razor",
-            "description": "Single Use Razors",
-            "owner": "Gillete",
-        })
+        const item = req.body;
+        const newItem = new Item(item);
         
         return newItem.save().then(() => {
          res.status(200).json(newItem);
@@ -28,14 +24,15 @@ router.get('/add', async(req, res) => {
     }
 });
 
-router.patch('/update:id', async(req, res) => {
+router.put('/update', async(req, res) => {
     try {
-        const id = req.params.id;
+        const id = req.body.id;
         const name = req.body.name;
         const description = req.body.description;
         const arrivalDate = req.body.arrivalDate;
         const departureDate = req.body.departureDate;
         const owner = req.body.owner;
+        const quantity = req.body.quantity;
         
         return Item.updateOne({id_: id}, {
             name: name,
@@ -43,23 +40,25 @@ router.patch('/update:id', async(req, res) => {
             arrivalDate: arrivalDate,
             departureDate: departureDate,
             owner: owner,
-        }).then((updated) => res.status(200).json(updated));
+            quantity : quantity,
+        }).then(() => res.status(200).json({"updated": true}));
 
     } catch (err) {
+        console.log(err);
         return res.status(500).json(err);
     }
 });
 
-router.delete('/delete:{id}', async(req, res) => {
+router.delete('/delete/:id', async(req, res) => {
     try {
         const {id} = req.params;
-        return CustomPosition.deleteOne({
+        return Item.deleteOne({
             _id: id,
         }).then(() => {res.status(200).json({"deleted": true})});
     } catch (err) {
+        console.log(err);
         return res.status(500).json(err);
     }
 });
-
 
 module.exports = router;

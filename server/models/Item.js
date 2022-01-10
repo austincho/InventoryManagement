@@ -9,7 +9,7 @@ const itemSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    arrivedDate: { 
+    arrivalDate: { 
         type: Date,
         require: true,
     },

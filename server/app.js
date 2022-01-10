@@ -2,11 +2,8 @@ const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
 const { initializeDatabaseConnection } = require('./util/databaseConnection');
-require('dotenv').config({ path: '../.env' });
-
-const inventoryRouter = require('./routes/inventory');
+require('dotenv').config({ path: '.env' });
 const itemRouter = require('./routes/item');
-
 const app = express();
 
 // Database Connection
@@ -18,8 +15,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // API Routes
-app.use('/inventory', inventoryRouter);
-app.use('/item', itemRouter);
+app.use('/api/item', itemRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
