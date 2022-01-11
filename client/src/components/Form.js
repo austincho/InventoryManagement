@@ -10,49 +10,49 @@ import axios from 'axios';
   const Form = (props) => {
     const { open, handleClose, addItemToInventory, editItemInInventory, edit, itemObj} = props;
     const nameConditional = edit ? itemObj.name : "";
-    const ownerConditional = edit ? itemObj.owner : "";
+    const companyConditional = edit ? itemObj.company : "";
     const quantityConditional = edit ? itemObj.quantity : "";
     const descriptionConditional = edit ? itemObj.description : "";
     const arrivalConditional = edit ? itemObj.arrivalDate.split('T')[0] : new Date().toISOString().split('T')[0];
     const departureConditional = edit ? itemObj.departureDate.split('T')[0] : new Date().toISOString().split('T')[0];
 
-    const [owner, setOwner] = useState(ownerConditional);
+    const [company, setCompany] = useState(companyConditional);
     const [name, setName] = useState(nameConditional);
     const [quantity, setQuantity] = useState(quantityConditional);
     const [description, setDescription] = useState(descriptionConditional);
     const [arrivalDate, setArrivalDate] = useState(arrivalConditional);
     const [departureDate, setDepartureDate] = useState(departureConditional);
 
-    function changeOwner (e) {
-        setOwner(e.target.value);
+    const changeCompany = (e) => {
+      setCompany(e.target.value);
     }
 
-    function changeName (e) {
+    const changeName = (e) => {
         setName(e.target.value);
     }
 
-    function changeArrivalDate(e) {
+    const changeArrivalDate = (e) => {
         setArrivalDate(e.target.value);
     }
     
-    function changeDepartureDate(e) {
+    const changeDepartureDate = (e) => {
         setDepartureDate(e.target.value);
     }
 
-    function changeDescription(e) {
+    const changeDescription = (e) => {
         setDescription(e.target.value);
     }
 
-    function changeQuantity(e) {
+    const changeQuantity = (e) => {
         setQuantity(e.target.value);
     }
 
-    function addSaveButton(e) {
+    const addSaveButton = (e) => {
         let newItemObj = {
             "name" : name,
             "description" : description,
             "quantity" : quantity,
-            "owner" : owner,
+            "company" : company,
             "arrivalDate" : arrivalDate,
             "departureDate": departureDate,
         }
@@ -67,7 +67,7 @@ import axios from 'axios';
             axios.post('/api/item/add', newItemObj).then(res => {
                 addItemToInventory(res.data)
                 handleClose();
-                changeOwner("");
+                changeCompany("");
                 changeName("");
                 changeDescription("");
                 changeArrivalDate("");
@@ -89,7 +89,7 @@ import axios from 'axios';
           <TextField id="filled-basic"label="Name" variant="filled" onChange={changeName} value={name}/>
           <TextField id="filled-basic" label="Description" variant="filled" onChange={changeDescription} value={description}/>
           <TextField id="filled-basic" label="Quantity" type="number" variant="filled" onChange={changeQuantity} value={quantity}/>
-          <TextField id="filled-basic" label="Owner" variant="filled" onChange={changeOwner} value={owner}/>
+          <TextField id="filled-basic" label="Company" variant="filled" onChange={changeCompany} value={company}/>
           <TextField id="filled-basic" label="Arrival Date" type="date" variant="filled" value={arrivalDate} onChange={changeArrivalDate}/>
           <TextField id="filled-basic" label="Departure Date" type="date" variant="filled" value={departureDate} onChange={changeDepartureDate}/>
             <Box style={{textAlign : "center", marginTop: "1rem"}}>

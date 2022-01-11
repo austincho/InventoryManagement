@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import DataTable from './components/DataTable';
 import Form from './components/Form';
@@ -8,18 +8,20 @@ import Button from '@mui/material/Button';
 function App() {
   const [inventory, setInventory] = useState([]);
   const [openAddForm, setOpenAddForm] = useState(false);
-
+  const [fileDownloadUrl, setFileDownloadUrl] = useState("");
+  const doDownload = useRef(null);
+  
   useEffect(() => {
     axios.get('/api/item/').then((res) => {
       setInventory(res.data);
     });
   }, []);
 
-  function addItemToInventory(item) {
+  const addItemToInventory = (item) => {
     setInventory([...inventory, item]);
   }
 
-  function editItemInInventory(success, newItem) {
+  const editItemInInventory = (success, newItem) => {
     if (success) {
       const newInventory = inventory.map(oldItem => {
         if (oldItem._id === newItem._id){
@@ -32,18 +34,30 @@ function App() {
     }
   }
 
-  function removeItemFromInventory(id) {
+  const removeItemFromInventory = (id) => {
     setInventory(inventory.filter(item => item._id !== id));
   }
 
-  function openAddItemForm() {
+  const openAddItemForm = () => {
     setOpenAddForm(true);
   }
 
-  function closeAddItemForm() {
+  const closeAddItemForm = () => {
     setOpenAddForm(false);
   }
-  
+
+  const downloadCsvButton = () => {
+    const headers = {
+      'Content-Type': 'text/csv',
+    }
+    axios.get('/api/item/csv', headers).then(async (res) => {
+      const blob = new Blob([res.data], {type: res.headers["content-disposition"]});
+      const fileURl = URL.createObjectURL(blob);
+      setFileDownloadUrl(fileURl);
+      doDownload.current.click();
+    });
+  }
+
   return (
     <div className="App">
       <div>
@@ -53,7 +67,12 @@ function App() {
 
       <DataTable inventory={inventory}  removeItemFromInventory={removeItemFromInventory} editItemInInventory={editItemInInventory}/>
       {openAddForm && <Form handleClose={closeAddItemForm} open={openAddForm} addItemToInventory={addItemToInventory} edit={false}/>}
-      <Button variant="contained" color="success" style={{ marginTop: "1rem"}}>Print CSV</Button>
+      <Button onClick={downloadCsvButton} variant="contained" color="success" style={{ marginTop: "1rem"}}>Download CSV</Button>
+      <a style={{display: "none"}}
+         download={"inventory.csv"}
+         href={fileDownloadUrl}
+         ref={doDownload}
+    >download it</a>
     </div>
   );
 }

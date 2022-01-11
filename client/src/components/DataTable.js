@@ -46,7 +46,7 @@ const DataTable = ({inventory, removeItemFromInventory, editItemInInventory}) =>
               <TableCell align="center">Quantity</TableCell>
               <TableCell align="center">Arrival Date</TableCell>
               <TableCell align="center">Departure Date</TableCell>
-              <TableCell align="center">Owner</TableCell>
+              <TableCell align="center">Company</TableCell>
               <TableCell align="center">Operations</TableCell>
             </TableRow>
           </TableHead>
@@ -64,7 +64,7 @@ const DataTable = ({inventory, removeItemFromInventory, editItemInInventory}) =>
                 <TableCell align="center">{row.quantity}</TableCell>
                 <TableCell align="center">{row.arrivalDate.split('T')[0]}</TableCell>
                 <TableCell align="center">{row.departureDate.split('T')[0]}</TableCell>
-                <TableCell align="center">{row.owner}</TableCell>
+                <TableCell align="center">{row.company}</TableCell>
                 <TableCell align="center">
                   <Button variant="outlined" style={{marginRight: "1rem"}} value={row._id} onClick={editButtonClick}>Edit</Button>
                   <Button variant="contained" color="error" value={row._id} onClick={onDeleteButtonClick}>Delete</Button>

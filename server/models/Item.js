@@ -3,27 +3,28 @@ const mongoose = require('mongoose');
 const itemSchema = new mongoose.Schema({
     name:  {
         type: String,
-        require: true,
+        required: true,
     },
     description: {
         type: String,
-        require: true,
+        required: true,
     },
     arrivalDate: { 
         type: Date,
-        require: true,
+        required: true,
     },
     departureDate: {
         type: Date,
-        require: true,
+        required: true,
     },
     quantity: {
-        type: Number, 
-        require: true,
+        type: Number,
+        min: [1, 'Quantity must be greater than 0.'],
+        required: true,
     },
-    owner: {
+    company: {
         type: String,
-        requrie: true,
+        required: true,
     },
   });
 
