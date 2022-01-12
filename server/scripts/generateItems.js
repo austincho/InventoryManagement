@@ -17,8 +17,8 @@ const insertGeneratedData = () => {
             logger.error(err);
         } else{
             logger.info(`Successfully inserted ${itemData.length} items into the Database.`);
+            exit(0);
         }
-        exit(0)
     });
 }
 

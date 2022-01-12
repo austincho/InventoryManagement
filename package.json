@@ -1,4 +1,7 @@
 {
+  "name": "inventory-management",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "axios": "^0.24.0",
     "cors": "^2.8.5",
@@ -15,6 +18,9 @@
     "heroku-postbuild": "cd client && yarn install && yarn build",
     "test": "node server/scripts/initializeTestDatabase.js && mocha server/tests/**.spec.js --require mocha-steps --exit && node server/scripts/cleanTestDatabase.js"
   },
+  "contributors": [
+    "Austin Cho <austin.cho14@gmail.com> (https://github.com/austincho)"
+  ],
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
