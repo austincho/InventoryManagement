@@ -3,10 +3,10 @@
 ## **Overview**
 This is a simple inventory tracking web application for a logistics company where users can create, read, update, delete and export all the items in the inventory to a CSV file. Given that the main focus of this challenge is on backend code, I put the most level of effort into the server and made a quick effort to create an interactive UI to interact with the backend server. 
 
+You can also view the web application live by following this  [link](https://ac-inventory-management.herokuapp.com/).
+
 ## **Initial Set Up**
 For the purposes of this demo I have included the .env file in the repository that includes the authentication token for the mongodb database. You can use the authentication token provided or replace the token with your own when running the web application locally.
-
-Lastly, you can also view the web application live by following this  [link](https://ac-inventory-management.herokuapp.com/).
 
 #### **To Run Locally**
 From the **root directory** of the repository enter into the command line...\
