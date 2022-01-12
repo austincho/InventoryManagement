@@ -17,6 +17,15 @@ To Run Client Locally: `cd client && yarn run`\
 To Run Tests: `yarn test`\
 To Generate Data into Mongo: `node server\scripts\generateItems.js`
 
+## **Features**
+| Operation | Endpoint| 
+|--|--|
+| Create Item | POST /api/item/add |
+| Retireve Items| GET /api/item/ |
+| Update Item | PUT /api/item/update |
+| Delete Item | DELETE /api/item/delete/{id} |
+| Export Items to CSV | GET /api/item/csv | 
+
 ## **Approach**
 I was constrained on time and chose to work with technologies that I had familiarity with in order to get a simple web application up and running. I created basic CRUD functionality and tried to design it so that it would be flexible for new features.
 
